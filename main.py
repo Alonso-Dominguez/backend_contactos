@@ -3,7 +3,6 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
 import sqlite3 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -19,6 +18,7 @@ origins = [
     "https://github.com/Alonso-Dominguez/frontend_contactos"
     #"URL de donde esta tu frontend en heroku",
 ]
+
 # Agregamos las opciones de origenes, credenciales, métodos y headers
 app.add_middleware(
     CORSMiddleware,
@@ -27,14 +27,6 @@ app.add_middleware(
     allow_methods = ["*"],
     allow_headers = ["*"]
 )
-
-
-templates = Jinja2Templates(directory="frontend/static")
-
-@app.get('/', response_class=HTMLResponse)
-async def index(request: Request):
-    context = {'request' : request}
-    return templates.TemplateResponse("index.html", context)
 
 # Modelo para la creación de un nuevo contacto
 class ContactoCreate(BaseModel):
@@ -58,9 +50,6 @@ cursor.execute('''
     )
 ''')
 conn.commit()
-
-app.mount("/static", StaticFiles(directory="frontend/static"), name="static")
-
 
 # Función para obtener todos los contactos
 def obtener_contactos():
