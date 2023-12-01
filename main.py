@@ -16,10 +16,9 @@ origins = [
     "http://0.0.0.0:8080", #URL de donde ejecutas tu api local
     "http://localhost:8080",#URL de donde ejecutas tu api local
     "http://127.0.0.1:8080",#URL de donde ejecutas tu api local
-    "https://github.com/Alonso-Dominguez/frontend_contactos",
-    "URL de donde esta tu frontend en heroku",
+    "https://github.com/Alonso-Dominguez/frontend_contactos"
+    #"URL de donde esta tu frontend en heroku",
 ]
-
 # Agregamos las opciones de origenes, credenciales, métodos y headers
 app.add_middleware(
     CORSMiddleware,
