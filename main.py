@@ -66,17 +66,6 @@ async def agregar_contacto(contacto: ContactoCreate):
 @app.get("/contactos", description="Obtener todos los contactos", response_model=list[dict])
 async def get_contactos():
     try:
-        conn, cursor = connect_to_database()
-        result = obtener_contactos(cursor)
-        close_database_connection(conn)
-        return result
-    except Exception as e:
-        raise HTTPException(status_code=500, detail="Error al obtener los contactos")
-
-# Endpoint para obtener todos los contactos
-@app.get("/contactos", description="Obtener todos los contactos", response_model=list[dict])
-async def get_contactos():
-    try:
         return obtener_contactos()
     except Exception as e:
         raise HTTPException(status_code=500, detail="Error al obtener los contactos")
