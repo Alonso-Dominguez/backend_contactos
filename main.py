@@ -12,7 +12,7 @@ origins = [
     "http://0.0.0.0:8080",  # URL de donde ejecutas tu api local
     "http://localhost:8080",  # URL de donde ejecutas tu api local
     "http://127.0.0.1:8080",  # URL de donde ejecutas tu api local
-    "https://frontend-contactos-jadc-acbf7ce35d15.herokuapp.com",
+    "https://frontend-contactos-jadc-acbf7ce35d15.herokuapp.com/",
 ]
 
 # Agregamos las opciones de origenes, credenciales, métodos y headers
@@ -66,7 +66,10 @@ async def agregar_contacto(contacto: ContactoCreate):
 @app.get("/contactos", description="Obtener todos los contactos", response_model=list[dict])
 async def get_contactos():
     try:
-        return obtener_contactos()
+        conn, cursor = connect_to_database()
+        result = obtener_contactos(cursor)
+        close_database_connection(conn)
+        return result
     except Exception as e:
         raise HTTPException(status_code=500, detail="Error al obtener los contactos")
 
